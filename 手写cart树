@@ -1,0 +1,35 @@
+import numpy as np
+import operator
+#dataset是特征矩阵，y是标签值，为了简单起见这里假设y是0，1类别
+
+def cal_gini(y0,y1): #用于每一个子数据集的gini指数，y表示其对应的标签值
+    total=y0+y1 #y0,y1分别表示类别1和类别0的数量
+    y1=sum(y)/total#计算类别1的占比，就是公式中的pk
+    y0=(length-y1)/total#计算类别0的占比
+    gini=1-y1**2-y0**2# 根据信息熵的公式计算信息熵
+    return gini
+def cart(dataset,y,min_split_gain):
+    #dataset是特征矩阵，y是标签值，为了简单起见这里假设y是0，1类别
+    all_feature_gini=[]
+    all_feature_col=[]
+    y0=y[y==0]
+    y1=y[y==1]
+    orginal_gini=cal_gini(y0,y1)
+    dataset['y']=y
+    for col in dataset.columns:
+        if col=='y':
+            continue
+        y1=dataset.groupby([col])['y'].apply('sum'))#对每一列特征，无论是连续还是离散都通过
+#groupby的形式计算其对应的标签值
+
+        y0=dataset[col].value_counts()-y #计算每一类别中0的数量
+        feature_gini=[]
+        for i in range(len(y1)):
+            feature_gini.append(cal_gini(y0[i],y1[i])) ##计算当前类别特征中每一个类别对应的信息熵
+        if -(sum(feature_gini)-original_gini)<min_split_gain:#如果当前分裂带来的基尼增益没有超过给定的阈值
+#则这个特征不考虑到待分裂特征中0
+            continue 
+        else:
+            all_feature_ent.append(sum(feature_gini))#存放所有符合要求的gini指数的值
+            all_feature_col.append(col) ##存放入选 特征的名字 
+    return all_feature_ent,all_feature_col
