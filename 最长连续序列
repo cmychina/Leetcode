@@ -1,0 +1,21 @@
+"""
+对于x,,x+1,x+2,...x+y 如果x-1已经出现，则不用考虑x
+"""
+class Solution:
+    def longestConsecutive(self, nums):
+        ans = 0
+        pre = set(nums)
+
+        for num in pre:
+            if num - 1 not in pre:
+                cur = num
+                cur_length = 1
+
+                while cur + 1 in pre:
+                    cur += 1
+                    cur_length += 1
+
+                ans = max(ans, cur_length)
+
+        return ans
+
