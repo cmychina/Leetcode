@@ -1,0 +1,22 @@
+class solution:
+    def sqrt(self,target,eps):
+        if target<0 or eps<0:
+            return -1
+        res=target
+        small=0 if target>1 else target
+        big=target if target>1 else 1
+        print(small,big)
+        while 1:
+            res = (big + small)/2
+            print(res)
+            diff=res*res-target
+            if abs(diff)<eps:
+                break
+            elif diff>0:
+                big=res
+            elif diff<0:
+                small=res
+
+        return res
+s=solution()
+print(s.sqrt(target=5,eps=0.0001))
